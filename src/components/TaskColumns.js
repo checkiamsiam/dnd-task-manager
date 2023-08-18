@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, IconButton, Tag, Text } from "@chakra-ui/react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const Column = ({ column, tasks }) => {
@@ -29,24 +29,34 @@ const Column = ({ column, tasks }) => {
 
       <Droppable droppableId={column.id}>
         {(droppableProvided, droppableSnapshot) => (
-          <Flex p="5px" flex={1} flexDir="column" bg="red" ml="10px" rounded="5px" ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+          <Flex
+            p="5px"
+            flex={1}
+            flexDir="column"
+            bg="#d3d3d3"
+            ml="10px"
+            rounded="5px"
+            ref={droppableProvided.innerRef}
+            {...droppableProvided.droppableProps}
+          >
             {tasks.map((task, index) => (
-              <Draggable key={task.id} draggableId={`${task.id}`} index={index} >
+              <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
                 {(draggableProvided, draggableSnapshot) => (
-                  <Flex
-                    mb="1rem"
-                    bg="white"
-                    h="72px"
-                    rounded="3px"
-                    p="1.5rem"
-                    outline="2px solid"
-                    outlineColor={draggableSnapshot.isDragging ? "card-border" : "transparent"}
-                    boxShadow={draggableSnapshot.isDragging ? "0 5px 10px rgba(0, 0, 0, 0.6)" : "unset"}
-                    ref={draggableProvided.innerRef}
-                    {...draggableProvided.draggableProps}
-                    {...draggableProvided.dragHandleProps}
-                  >
-                    <Text>{task.content}</Text>
+                   <Flex
+                   mb="1rem"
+                   bg="white"
+                   h="150"
+                   rounded="3px"
+                   p="1.5rem"
+                   outline="2px solid"
+                   outlineColor={draggableSnapshot.isDragging ? "card-border" : "transparent"}
+                   boxShadow={draggableSnapshot.isDragging ? "0 5px 10px rgba(0, 0, 0, 0.6)" : "unset"}
+                   ref={draggableProvided.innerRef}
+                   {...draggableProvided.draggableProps}
+                   {...draggableProvided.dragHandleProps}
+                 >
+                
+                <Text fontSize="lg">{task?.content}</Text>
                   </Flex>
                 )}
               </Draggable>

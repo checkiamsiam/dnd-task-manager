@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 
 const Column = dynamic(() => import("./TaskColumns"), { ssr: false });
@@ -19,7 +19,19 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
 };
 
 export default function TaskManager() {
-  const [state, setState] = useState(initialData);
+  const [state, setState] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedData = window.localStorage.getItem("taskManagerData");
+      return savedData ? JSON.parse(savedData) : initialData;
+    }
+    return initialData;
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("taskManagerData", JSON.stringify(state));
+    }
+  }, [state]);
 
   const onDragEnd = (result) => {
     const { destination, source } = result;
@@ -79,9 +91,9 @@ export default function TaskManager() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Flex flexDir="column" bg="main-bg" minH="100vh" w="full" py="1rem">
+      <Flex flexDir="column" minH="100vh" w="full" py="1rem">
         <Flex justify="space-between" px="4rem">
-          {state.columnOrder.map((columnId) => {
+          {state?.columnOrder?.map((columnId) => {
             const column = state.columns[columnId];
             const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
 
@@ -96,17 +108,16 @@ export default function TaskManager() {
 const initialData = {
   tasks: {
     1: { id: 1, content: "Configure Next.js application" },
-    2: { id: 2, content: "Configure Next.js and tailwind " },
-    3: { id: 3, content: "Create sidebar navigation menu" },
-    4: { id: 4, content: "Create page footer" },
-    5: { id: 5, content: "Create page navigation menu" },
-    6: { id: 6, content: "Create page layout" },
+    2: { id: 2, content: "Configure Next.js , tailwind , Chakra-UI" },
+    3: { id: 3, content: "Create sidebar navigation menu and header" },
+    4: { id: 4, content: "Create page Main Body" },
+    5: { id: 5, content: "Create Todo Func" },
   },
   columns: {
     "column-1": {
       id: "column-1",
       title: "TO-DO",
-      taskIds: [1, 2, 3, 4, 5, 6],
+      taskIds: [1, 2, 3, 4, 5],
     },
     "column-2": {
       id: "column-2",
