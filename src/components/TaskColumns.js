@@ -3,7 +3,7 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const Column = ({ column, tasks }) => {
   return (
-    <Flex rounded="3px" bg="column-bg" w="400px" flexDir="column">
+    <Flex rounded="3px" w="400px" minH="700px" flexDir="column">
       <Flex align="center" rounded="3px 3px 0 0" px="1rem" mb="1rem">
         <Text
           fontSize="17px"
@@ -29,14 +29,14 @@ const Column = ({ column, tasks }) => {
 
       <Droppable droppableId={column.id}>
         {(droppableProvided, droppableSnapshot) => (
-          <Flex px="1.5rem" flex={1} flexDir="column" ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+          <Flex p="5px" flex={1} flexDir="column" bg="red" ml="10px" rounded="5px" ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
             {tasks.map((task, index) => (
-              <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
+              <Draggable key={task.id} draggableId={`${task.id}`} index={index} >
                 {(draggableProvided, draggableSnapshot) => (
                   <Flex
                     mb="1rem"
+                    bg="white"
                     h="72px"
-                    bg="card-bg"
                     rounded="3px"
                     p="1.5rem"
                     outline="2px solid"
