@@ -13,7 +13,7 @@ const BreadcrumbNav = () => {
       </BreadcrumbItem>
 
       <BreadcrumbItem isCurrentPage>
-        <BreadcrumbLink href="#">Hazrat's Task</BreadcrumbLink>
+        <BreadcrumbLink href="#">Hazrats Task</BreadcrumbLink>
       </BreadcrumbItem>
     </Breadcrumb>
   );
