@@ -1,6 +1,6 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 
 const Column = dynamic(() => import("./TaskColumns"), { ssr: false });
@@ -28,10 +28,7 @@ export default function TaskManager() {
     if (!destination) return;
 
     // if the user drags and drops back in the same position
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
 
@@ -40,11 +37,7 @@ export default function TaskManager() {
     const destinationCol = state.columns[destination.droppableId];
 
     if (sourceCol.id === destinationCol.id) {
-      const newColumn = reorderColumnList(
-        sourceCol,
-        source.index,
-        destination.index
-      );
+      const newColumn = reorderColumnList(sourceCol, source.index, destination.index);
 
       const newState = {
         ...state,
@@ -86,15 +79,7 @@ export default function TaskManager() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Flex
-        flexDir="column"
-        bg="main-bg"
-        minH="100vh"
-        w="full"
-        color="white-text"
-        pb="2rem"
-      >
-
+      <Flex flexDir="column" bg="main-bg" minH="100vh" w="full" py="1rem">
         <Flex justify="space-between" px="4rem">
           {state.columnOrder.map((columnId) => {
             const column = state.columns[columnId];
@@ -130,10 +115,15 @@ const initialData = {
     },
     "column-3": {
       id: "column-3",
+      title: "UNDER REVIEW",
+      taskIds: [],
+    },
+    "column-4": {
+      id: "column-4",
       title: "COMPLETED",
       taskIds: [],
     },
   },
   // Facilitate reordering of the columns
-  columnOrder: ["column-1", "column-2", "column-3"],
+  columnOrder: ["column-1", "column-2", "column-3", "column-4"],
 };
